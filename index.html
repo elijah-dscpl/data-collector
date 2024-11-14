@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Formulario para Recolectar Información sobre SEN ~</h1>
+        <h1>Formulario para Recolectar Información de la Noticia</h1>
         
         <form id="newsForm">
             <label for="title">Título de la Noticia:</label>
@@ -35,12 +35,13 @@
             <label for="sources">Fuentes de la Noticia (separadas por comas):</label>
             <input type="text" id="sources" name="sources">
             
+            <!-- Mover esta sección justo antes del botón -->
             <div id="repeatedWordsSection">
                 <h3>Palabras Repetidas Más de 4 Veces:</h3>
                 <p id="repeatedWordsList">Ninguna</p>
             </div>
 
-            
+            <!-- Botón para generar JSON -->
             <button type="submit">Generar JSON</button>
         </form>
 
