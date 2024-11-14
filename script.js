@@ -7,9 +7,9 @@ document.getElementById('newsForm').addEventListener('submit', function(event) {
     const author = document.getElementById('author').value;
     const category = document.getElementById('category').value;
     const content = document.getElementById('content').value;
-    const tags = document.getElementById('tags').value.split(',');
+    const tags = document.getElementById('tags').value.split(',').filter(tag => tag.trim() !== ''); // Filtrar etiquetas vacías
     const comments = document.getElementById('comments').value || 0;
-    const sources = document.getElementById('sources').value.split(',');
+    const sources = document.getElementById('sources').value.split(',').filter(source => source.trim() !== ''); // Filtrar fuentes vacías
 
     // Extraer las palabras repetidas
     const repeatedWords = extractRepeatedWords(content);
@@ -33,27 +33,31 @@ document.getElementById('newsForm').addEventListener('submit', function(event) {
     // Convertir el objeto a JSON
     const jsonData = JSON.stringify(newsData, null, 4);
 
-    // Crear un archivo Blob con el JSON
-    const blob = new Blob([jsonData], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-
-    // Mostrar la sección de descarga y proporcionar el enlace al archivo
+    // Mostrar la sección de descarga
     const downloadSection = document.getElementById('downloadSection');
     downloadSection.classList.remove('hidden');
 
+    // Agregar el evento al botón de descarga
     const downloadButton = document.getElementById('downloadButton');
     downloadButton.addEventListener('click', function() {
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${title} + ${date}.json`;
-        a.click();
+        downloadJSON(`${title}_${date}.json`, jsonData);
     });
 });
 
-// Función para extraer las palabras repetidas más de 4 veces (excluyendo pronombres)
+// Función para descargar el archivo JSON
+function downloadJSON(filename, jsonData) {
+    const blob = new Blob([jsonData], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+}
+
+// Función para extraer las palabras repetidas más de 4 veces (excluyendo pronombres y otras palabras comunes)
 function extractRepeatedWords(text) {
-    // Lista de pronombres comunes que se excluirán
-    const pronouns = ['yo', 'tú', 'él', 'ella', 'nosotros', 'vosotros', 'ellos', 'ellas', 'me', 'te', 'se', 'nos', 'os', 'le', 'les'];
+    // Lista de palabras excluidas
+    const excludedWords = ['yo', 'tú', 'él', 'ella', 'nosotros', 'vosotros', 'ellos', 'ellas', 'me', 'te', 'se', 'nos', 'os', 'le', 'les', 'el', 'la', 'los', 'las', 'un', 'una', 'unos', 'unas', 'y', 'o', 'de', 'en', 'por', 'para', 'con'];
 
     // Convertir el texto a minúsculas, quitar signos de puntuación y dividirlo en palabras
     const words = text.toLowerCase().replace(/[^a-záéíóúüñ\s]/gi, '').split(/\s+/);
@@ -61,7 +65,7 @@ function extractRepeatedWords(text) {
     // Contar la frecuencia de cada palabra
     const wordCounts = {};
     words.forEach(word => {
-        if (word.length > 1 && !pronouns.includes(word)) { // Excluir palabras de un solo carácter y los pronombres
+        if (word.length > 1 && !excludedWords.includes(word)) { // Excluir palabras de un solo carácter y las palabras excluidas
             wordCounts[word] = (wordCounts[word] || 0) + 1;
         }
     });
@@ -86,4 +90,3 @@ function displayRepeatedWords(repeatedWords) {
         repeatedWordsList.textContent = repeatedWords.join(', ');
     }
 }
-
