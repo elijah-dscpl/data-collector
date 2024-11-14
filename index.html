@@ -29,8 +29,19 @@
             <label for="tags">Etiquetas (separadas por comas):</label>
             <input type="text" id="tags" name="tags">
             
+            <label for="comments">Cantidad de Comentarios:</label>
+            <input type="number" id="comments" name="comments" min="0">
+            
+            <label for="sources">Fuentes de la Noticia (separadas por comas):</label>
+            <input type="text" id="sources" name="sources">
+            
             <button type="submit">Generar JSON</button>
         </form>
+
+        <div id="repeatedWordsSection">
+            <h3>Palabras Repetidas Más de 5 Veces:</h3>
+            <ul id="repeatedWordsList"></ul>
+        </div>
 
         <div id="downloadSection" class="hidden">
             <p>Archivo JSON generado exitosamente.</p>
