@@ -7,12 +7,16 @@ document.getElementById('newsForm').addEventListener('submit', function(event) {
     const author = document.getElementById('author').value;
     const category = document.getElementById('category').value;
     const content = document.getElementById('content').value;
-    const tags = document.getElementById('tags').value.split(',').filter(tag => tag.trim() !== ''); // Filtrar etiquetas vacías
+    const tags = document.getElementById('tags').value.split(',');
     const comments = document.getElementById('comments').value || 0;
-    const sources = document.getElementById('sources').value.split(',').filter(source => source.trim() !== ''); // Filtrar fuentes vacías
+    const sources = document.getElementById('sources').value.split(',');
+    const commentsText = document.getElementById('commentsText').value;
 
     // Extraer las palabras repetidas
     const repeatedWords = extractRepeatedWords(content);
+    
+    // Clasificar los comentarios
+    const classifiedComments = classifyComments(commentsText);
     
     // Mostrar las palabras repetidas o el mensaje "Ninguna"
     displayRepeatedWords(repeatedWords);
@@ -27,50 +31,42 @@ document.getElementById('newsForm').addEventListener('submit', function(event) {
         tags: tags,
         comments: comments,
         sources: sources,
-        repeatedWords: repeatedWords // Guardamos las palabras repetidas
+        repeatedWords: repeatedWords, // Guardamos las palabras repetidas
+        classifiedComments: classifiedComments // Guardamos los comentarios clasificados
     };
 
     // Convertir el objeto a JSON
     const jsonData = JSON.stringify(newsData, null, 4);
 
-    // Mostrar la sección de descarga
+    // Crear un archivo Blob con el JSON
+    const blob = new Blob([jsonData], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    // Mostrar la sección de descarga y proporcionar el enlace al archivo
     const downloadSection = document.getElementById('downloadSection');
     downloadSection.classList.remove('hidden');
 
-    // Agregar el evento al botón de descarga
     const downloadButton = document.getElementById('downloadButton');
     downloadButton.addEventListener('click', function() {
-        downloadJSON(`${title}_${date}.json`, jsonData);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${title} + ${date}.json`;
+        a.click();
     });
 });
 
-// Función para descargar el archivo JSON
-function downloadJSON(filename, jsonData) {
-    const blob = new Blob([jsonData], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    a.click();
-}
-
-// Función para extraer las palabras repetidas más de 4 veces (excluyendo pronombres y otras palabras comunes)
+// Función para extraer las palabras repetidas más de 4 veces (excluyendo pronombres)
 function extractRepeatedWords(text) {
-    // Lista de palabras excluidas
-    const excludedWords = ['yo', 'tú', 'él', 'ella', 'nosotros', 'vosotros', 'ellos', 'ellas', 'me', 'te', 'se', 'nos', 'os', 'le', 'les', 'el', 'la', 'los', 'las', 'un', 'una', 'unos', 'unas', 'y', 'o', 'de', 'en', 'por', 'para', 'con'];
-
-    // Convertir el texto a minúsculas, quitar signos de puntuación y dividirlo en palabras
+    const pronouns = ['yo', 'tú', 'él', 'ella', 'nosotros', 'vosotros', 'ellos', 'ellas', 'me', 'te', 'se', 'nos', 'os', 'le', 'les'];
     const words = text.toLowerCase().replace(/[^a-záéíóúüñ\s]/gi, '').split(/\s+/);
 
-    // Contar la frecuencia de cada palabra
     const wordCounts = {};
     words.forEach(word => {
-        if (word.length > 1 && !excludedWords.includes(word)) { // Excluir palabras de un solo carácter y las palabras excluidas
+        if (word.length > 1 && !pronouns.includes(word)) {
             wordCounts[word] = (wordCounts[word] || 0) + 1;
         }
     });
 
-    // Filtrar las palabras que se repiten más de 4 veces
     const repeatedWords = [];
     for (const word in wordCounts) {
         if (wordCounts[word] > 4) {
@@ -89,4 +85,33 @@ function displayRepeatedWords(repeatedWords) {
     } else {
         repeatedWordsList.textContent = repeatedWords.join(', ');
     }
+}
+
+// Función para clasificar los comentarios
+function classifyComments(commentsText) {
+    const positiveWords = ['felicidades', 'abrazo', 'mucho talento', 'exitos', 'campeones'];
+    const negativeWords = ['falta', 'difíciles', 'errores', 'disculpas'];
+    
+    const commentsArray = commentsText.split('\n').filter(line => line.trim() !== ''); // Separar los comentarios por línea
+    const classifiedComments = {
+        positive: [],
+        negative: [],
+        neutral: []
+    };
+
+    commentsArray.forEach(comment => {
+        const lowerComment = comment.toLowerCase();
+        let isPositive = positiveWords.some(word => lowerComment.includes(word));
+        let isNegative = negativeWords.some(word => lowerComment.includes(word));
+
+        if (isPositive) {
+            classifiedComments.positive.push(comment);
+        } else if (isNegative) {
+            classifiedComments.negative.push(comment);
+        } else {
+            classifiedComments.neutral.push(comment);
+        }
+    });
+
+    return classifiedComments;
 }
