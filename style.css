@@ -1,3 +1,18 @@
+#repeatedWordsSection {
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+#repeatedWordsList {
+    list-style-type: none;
+    padding: 0;
+}
+
+#repeatedWordsList li {
+    margin: 5px 0;
+}
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
