@@ -10,13 +10,9 @@ document.getElementById('newsForm').addEventListener('submit', function(event) {
     const tags = document.getElementById('tags').value.split(',');
     const comments = document.getElementById('comments').value || 0;
     const sources = document.getElementById('sources').value.split(',');
-    const commentsText = document.getElementById('commentsText').value;
 
     // Extraer las palabras repetidas
     const repeatedWords = extractRepeatedWords(content);
-    
-    // Clasificar los comentarios
-    const classifiedComments = classifyComments(commentsText);
     
     // Mostrar las palabras repetidas o el mensaje "Ninguna"
     displayRepeatedWords(repeatedWords);
@@ -31,8 +27,7 @@ document.getElementById('newsForm').addEventListener('submit', function(event) {
         tags: tags,
         comments: comments,
         sources: sources,
-        repeatedWords: repeatedWords, // Guardamos las palabras repetidas
-        classifiedComments: classifiedComments // Guardamos los comentarios clasificados
+        repeatedWords: repeatedWords // Guardamos las palabras repetidas
     };
 
     // Convertir el objeto a JSON
@@ -85,33 +80,4 @@ function displayRepeatedWords(repeatedWords) {
     } else {
         repeatedWordsList.textContent = repeatedWords.join(', ');
     }
-}
-
-// Función para clasificar los comentarios
-function classifyComments(commentsText) {
-    const positiveWords = ['felicidades', 'abrazo', 'mucho talento', 'exitos', 'campeones'];
-    const negativeWords = ['falta', 'difíciles', 'errores', 'disculpas'];
-    
-    const commentsArray = commentsText.split('\n').filter(line => line.trim() !== ''); // Separar los comentarios por línea
-    const classifiedComments = {
-        positive: [],
-        negative: [],
-        neutral: []
-    };
-
-    commentsArray.forEach(comment => {
-        const lowerComment = comment.toLowerCase();
-        let isPositive = positiveWords.some(word => lowerComment.includes(word));
-        let isNegative = negativeWords.some(word => lowerComment.includes(word));
-
-        if (isPositive) {
-            classifiedComments.positive.push(comment);
-        } else if (isNegative) {
-            classifiedComments.negative.push(comment);
-        } else {
-            classifiedComments.neutral.push(comment);
-        }
-    });
-
-    return classifiedComments;
 }
