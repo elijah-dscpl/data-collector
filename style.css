@@ -1,8 +1,76 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 50px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #555;
+}
+
+input[type="text"], input[type="date"], input[type="number"], textarea {
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+button.hidden {
+    display: none;
+}
+
 #repeatedWordsSection {
     margin-top: 20px;
     background-color: #f9f9f9;
     padding: 15px;
     border-radius: 5px;
+    border: 1px solid #ddd;
 }
 
 #repeatedWordsList {
@@ -12,52 +80,7 @@
 
 #repeatedWordsList li {
     margin: 5px 0;
-}
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-}
-
-.container {
-    width: 80%;
-    margin: 20px auto;
-    background-color: white;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
-
-h1 {
-    text-align: center;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-input, textarea, button {
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-}
-
-textarea {
-    resize: vertical;
-}
-
-button {
-    background-color: #28a745;
-    color: white;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #218838;
+    color: #555;
 }
 
 #downloadSection {
@@ -65,6 +88,10 @@ button:hover {
     text-align: center;
 }
 
-.hidden {
-    display: none;
+#downloadButton {
+    background-color: #007bff;
+}
+
+#downloadButton:hover {
+    background-color: #0056b3;
 }
