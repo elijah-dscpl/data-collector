@@ -61,10 +61,6 @@ button:hover {
     background-color: #45a049;
 }
 
-button.hidden {
-    display: none;
-}
-
 #repeatedWordsSection {
     margin-top: 20px;
     background-color: #f9f9f9;
@@ -74,12 +70,6 @@ button.hidden {
 }
 
 #repeatedWordsList {
-    list-style-type: none;
-    padding: 0;
-}
-
-#repeatedWordsList li {
-    margin: 5px 0;
     color: #555;
 }
 
