@@ -35,13 +35,14 @@
             <label for="sources">Fuentes de la Noticia (separadas por comas):</label>
             <input type="text" id="sources" name="sources">
             
+            <div id="repeatedWordsSection">
+                <h3>Palabras Repetidas Más de 4 Veces:</h3>
+                <p id="repeatedWordsList">Ninguna</p>
+            </div>
+
+            
             <button type="submit">Generar JSON</button>
         </form>
-
-        <div id="repeatedWordsSection">
-            <h3>Palabras Repetidas Más de 4 Veces:</h3>
-            <p id="repeatedWordsList">Ninguna</p>
-        </div>
 
         <div id="downloadSection" class="hidden">
             <p>Archivo JSON generado exitosamente.</p>
