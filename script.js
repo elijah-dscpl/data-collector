@@ -54,18 +54,18 @@ document.getElementById('newsForm').addEventListener('submit', function(event) {
 function extractRepeatedWords(text) {
     // Lista de pronombres comunes que se excluirán
     const pronouns = ['yo', 'tú', 'él', 'ella', 'nosotros', 'vosotros', 'ellos', 'ellas', 'me', 'te', 'se', 'nos', 'os', 'le', 'les'];
-    
+
     // Convertir el texto a minúsculas, quitar signos de puntuación y dividirlo en palabras
-    const words = text.toLowerCase().replace(/[^\w\s]/g, '').split(/\s+/);
-    
+    const words = text.toLowerCase().replace(/[^a-záéíóúüñ\s]/gi, '').split(/\s+/);
+
     // Contar la frecuencia de cada palabra
     const wordCounts = {};
     words.forEach(word => {
-        if (!pronouns.includes(word) && word.length > 1) { // Excluir pronombres y palabras de un solo carácter
+        if (word.length > 1 && !pronouns.includes(word)) { // Excluir palabras de un solo carácter y los pronombres
             wordCounts[word] = (wordCounts[word] || 0) + 1;
         }
     });
-    
+
     // Filtrar las palabras que se repiten más de 4 veces
     const repeatedWords = [];
     for (const word in wordCounts) {
@@ -73,7 +73,7 @@ function extractRepeatedWords(text) {
             repeatedWords.push(word);
         }
     }
-    
+
     return repeatedWords;
 }
 
@@ -86,3 +86,4 @@ function displayRepeatedWords(repeatedWords) {
         repeatedWordsList.textContent = repeatedWords.join(', ');
     }
 }
+
