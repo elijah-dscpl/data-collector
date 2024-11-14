@@ -2,7 +2,10 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f9;
+    background-image: url('https://raw.githubusercontent.com/elijah-dscpl/data-collector/main/wallpaper.jpg');
+    background-size: cover; /* Para que la imagen cubra toda la pantalla */
+    background-position: center; /* Centrar la imagen */
+    background-attachment: fixed; /* Fijar la imagen para que no se mueva con el scroll */
 }
 
 .container {
@@ -10,7 +13,7 @@ body {
     margin: 0 auto;
     padding: 20px;
     background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.8); /* Hacer el fondo del contenedor semi-transparente */
     border-radius: 8px;
     margin-top: 50px;
 }
