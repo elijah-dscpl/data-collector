@@ -14,6 +14,7 @@ body {
     padding: 20px;
     background-color: #fff;
     background-color: rgba(255, 255, 255, 0.8); /* Hacer el fondo del contenedor semi-transparente */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     margin-top: 50px;
 }
